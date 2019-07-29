@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.accp.dao.RecordMapper" >
+  <resultMap id="BaseResultMap" type="com.accp.pojo.Record" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="stuCode" property="stucode" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="DATE" />
+    <result column="createBy" property="createby" jdbcType="VARCHAR" />
+    <result column="des" property="des" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.accp.pojo.Record" useGeneratedKeys="true" keyProperty="id" >
+    insert into record (name, stuCode, createDate, 
+      createBy, des)
+    values (#{name,jdbcType=VARCHAR}, #{stucode,jdbcType=VARCHAR}, #{createdate,jdbcType=DATE}, 
+      #{createby,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.accp.pojo.Record" >
+    update record
+    set name = #{name,jdbcType=VARCHAR},
+      stuCode = #{stucode,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=DATE},
+      createBy = #{createby,jdbcType=VARCHAR},
+      des = #{des,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, name, stuCode, createDate, createBy, des
+    from record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, stuCode, createDate, createBy, des
+    from record
+  </select>
+  <select id="selectByStuCode" resultType="com.accp.pojo.RecordVo">
+    select * from `record` where `stuCode` = #{stuCode}
+  </select>
+
+  <select id="selectRecord" resultType="com.accp.pojo.RecordVo">
+    SELECT
+      r.`id`, r.`name`, s.`name` sname, r.`createBy`, r.`createDate`
+    FROM
+      `record` r
+        JOIN `student` s
+             ON r.`stuCode` = s.`code`
+    <where>
+      <if test="name">
+        r.`name` LIKE CONCAT('%', #{name}, '%')
+      </if>
+      <if test="sname">
+        AND s.`name` LIKE CONCAT('%', #{sname}, '%')
+      </if>
+    </where>
+  </select>
+  <select id="selectById" resultMap="BaseResultMap">
+    select id, name, stuCode, createDate, createBy, des
+    from record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <update id="updateRecord">
+    update `record` set `name` = #{name}, `des` = #{des} where `id` = #{id}
+  </update>
+</mapper>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>收件箱</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>奖惩</th>
+                        <th>学生名字</th>
+                        <th>创建人</th>
+                        <th>描述</th>
+                    </tr>
+                </thead>
+                <tbody id="list5" th:remove="${list.size()==0?'none':'all-but-first'}">
+                    <tr th:each="temp, iter: ${list}">
+                        <td th:text="${iter.index}"></td>
+                        <td th:text="${temp.name}"></td>
+                        <td th:text="${temp.sname}"></td>
+                        <td th:text="${temp.createby}"></td>
+                        <td th:text="${temp.des}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/superDialog.js"></script>
+<script>
+</script>
+
+</html>

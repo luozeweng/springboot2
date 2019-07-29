@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>编写页面</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link href="/css/file.css" rel="stylesheet" type="text/css"/>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #addEmail {
+            margin: 20px 40px;
+        }
+
+        #addEmail div {
+            margin-top: 10px;
+        }
+
+        .dpts {
+            cursor: pointer;
+        }
+
+        td input, textarea {
+            outline: 0px;
+            border: solid grey 2px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+<form th:action="@{/c/recode/add}" method="POST">
+    <table>
+        <tr>
+            <td colspan="2" height="6"></td>
+        </tr>
+        <tr>
+            <td align="right"><label>奖罚记录名：</label></td>
+            <td><input type="text" id="name" name="name" required /></td>
+        </tr>
+        <tr>
+            <td align="right"><label>惩罚对象：</label></td>
+            <td>
+                <select id="stucode" name="stucode">
+                    <option th:each="temp, iter: ${stuList}" th:value="${temp.code}">[[${temp.name}]]</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="right"><label>描述：</label></td>
+            <td>
+                <textarea name="des"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" height="10"></td>
+        </tr>
+        <tbody>
+        <tr>
+            <td></td>
+            <td id="td">
+
+            </td>
+        </tr>
+        </tbody>
+        <tr>
+            <td colspan="3" align="center" id="btns">
+                <button type="submit" class="btn btn-success" data-dismiss="modal">添加</button>
+                <button type="reset" class="btn btn-info" data-dismiss="modal">重置</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">取消</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+</body>
+<script type="text/javascript" src="/js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script>
+    $("#stucode").val(1)
+</script>
+
+</html>

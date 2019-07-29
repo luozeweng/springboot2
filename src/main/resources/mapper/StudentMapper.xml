@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.accp.dao.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.accp.pojo.Student" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="major" property="major" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="tel" property="tel" jdbcType="INTEGER" />
+    <result column="job" property="job" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from student
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.accp.pojo.Student" >
+    insert into student (id, code, name, 
+      pwd, major, grade, 
+      sex, birthday, tel, job
+      )
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{pwd,jdbcType=VARCHAR}, #{major,jdbcType=INTEGER}, #{grade,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{tel,jdbcType=INTEGER}, #{job,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.accp.pojo.Student" >
+    update student
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      major = #{major,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=DATE},
+      tel = #{tel,jdbcType=INTEGER},
+      job = #{job,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, code, name, pwd, major, grade, sex, birthday, tel, job
+    from student
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <resultMap id="PageMap" type="com.accp.pojo.Student" >
+    <collection property="rlist" column="code" select="com.accp.dao.RecordMapper.selectByStuCode"/>
+  </resultMap>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, code, name, pwd, major, grade, sex, birthday, tel, job
+    from student
+  </select>
+
+  <select id="selectStudent" resultMap="BaseResultMap">
+    SELECT * FROM `student`
+    <where>
+      <if test="name">
+        `name` = #{name}
+      </if>
+      <if test="pwd">
+        AND `pwd` = #{pwd}
+      </if>
+    </where>
+  </select>
+</mapper>
